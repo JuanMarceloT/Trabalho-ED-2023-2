@@ -3,10 +3,8 @@
 #include <string.h>
 #include <string>
 #include <iostream>
+
 //avl e e abp
-
-
-
 
 
 struct FOODINFO {
@@ -16,6 +14,13 @@ struct FOODINFO {
 
 
 int main(int argc, char* argv[]){
+
+
+    if(argc != 4){
+        printf("Argumentos insuficientes");
+        return 1;
+    }
+
     FILE *SourceFIle;
     char line[100]; 
     SourceFIle = fopen(argv[1], "r"); 
