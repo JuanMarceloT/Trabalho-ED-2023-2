@@ -4,6 +4,12 @@
 #include <string.h>
 #include <string>
 
+struct FOODINFO {
+  char name[50];
+  int caloriesPer100g;
+};
+typedef struct FOODINFO FOODINFO;
+
 struct TNodoA {
   FOODINFO info;
   int FB;
@@ -12,18 +18,15 @@ struct TNodoA {
 };
 typedef struct TNodoA pNodoA;
 
-struct FOODINFO {
-  char name[50];
-  int caloriesPer100g;
-};
+
 // avl e e abp
 
 // avl
-
-class avl {
+// avl
+// Utilizei codigos disponiveis no moodle
+class AVL {
 private:
-
-    pNodoA *raiz;
+  TNodoA *root;
 
   pNodoA *rotacao_direita(pNodoA *p) {
     pNodoA *u;
@@ -105,16 +108,29 @@ private:
   }
 
 public:
+  AVL() { root = nullptr; }
 
-    AVLTree() : raiz(nullptr) {}
-
-
-    int Inserir(FOODINFO x) {
+  int Inserir(FOODINFO x) {
     int ok = 0;
     root = Inserir(root, x, &ok);
     return ok;
   }
+  void imprimir() { _imprimir(root, 1); }
+
 private:
+  void _imprimir(pNodoA *nodo, int nivel) {
+    if (nodo == NULL)
+      return;
+
+    for (int i = 0; i < nivel; i++) {
+      printf("=");
+    }
+    printf("%s\nesq: %s\ndir: %s\n\n\n", nodo->info.name, nodo->esq->info.name,
+           nodo->dir->info.name);
+    printf("\n");
+    _imprimir(nodo->esq, (nivel + 1));
+    _imprimir(nodo->dir, (nivel + 1));
+  }
   pNodoA *Inserir(pNodoA *a, FOODINFO x, int *ok) {
     /* Insere nodo em uma árvore AVL, onde A representa a raiz da árvore,
     x, a chave a ser inserida e h a altura da árvore */
@@ -125,7 +141,7 @@ private:
       a->dir = NULL;
       a->FB = 0;
       *ok = 1;
-    } else if (strcmp(x, a->info) < 0) {
+    } else if (strcmp(x.name, a->info.name) < 0) {
       a->esq = Inserir(a->esq, x, ok);
       if (*ok) {
         switch (a->FB) {
@@ -160,9 +176,7 @@ private:
     }
     return a;
   }
-
-}
-
+};
 
 // ABP
 // Utilizei codigos disponiveis no moodle
@@ -175,7 +189,7 @@ private:
       a->info = ch;
       a->esq = NULL;
       a->dir = NULL;
-    }else if (strcmp(ch.name, a->info.name) < 0)
+    } else if (strcmp(ch.name, a->info.name) < 0)
       a->esq = InsereArvore(a->esq, ch);
     else
       a->dir = InsereArvore(a->dir, ch);
@@ -183,27 +197,20 @@ private:
   }
   void ImprimeArvore(pNodoA *a) {
     if (a != NULL) {
-        ImprimeArvore(a->esq);
-        printf("%s\n", a->info.name); 
-        ImprimeArvore(a->dir);
+      ImprimeArvore(a->esq);
+      printf("%s\n", a->info.name);
+      ImprimeArvore(a->dir);
     }
-  } 
+  }
+
 public:
   ABP() { root = nullptr; }
 
-  void Inserir(FOODINFO x) {
-    root = InsereArvore(root, x);
-  }
-  void imprimir() { 
-    ImprimeArvore(root);
-  }
-
-  
+  void Inserir(FOODINFO x) { root = InsereArvore(root, x); }
+  void imprimir() { ImprimeArvore(root); }
 };
 
-
-
-int main(int argc, char* argv[]){
+int main(int argc, char *argv[]) {
 
   if (argc != 4) {
     printf("Argumentos insuficientes");
@@ -211,7 +218,7 @@ int main(int argc, char* argv[]){
   }
 
   FILE *SourceFIle;
-  char line[100];
+  char line[50];
   SourceFIle = fopen(argv[1], "r");
 
   if (SourceFIle == NULL) {
@@ -229,8 +236,7 @@ int main(int argc, char* argv[]){
       if (token != NULL) {
         food.caloriesPer100g = std::stoi(token);
       }
-      // printf("Food: %s and calories: %d per 100 grams\n",
-      // food.name,food.caloriesPer100g);
+      printf("Food: %s and calories: %d per 100 grams\n",food.name,food.caloriesPer100g);
     }
   }
   fclose(SourceFIle);
@@ -246,14 +252,7 @@ int main(int argc, char* argv[]){
 
   fclose(OutputFile);
 
-  // organizando palavras pelo ordem alfabetica
-
-  char word1[] = "bazane";
-  char word2[] = "bazana";
-
-  int result = strcmp(word1, word2);
-  printf("%d\n", result);
-
+  
 
   return 0;
 }
