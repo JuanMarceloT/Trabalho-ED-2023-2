@@ -10,6 +10,14 @@ struct FOODINFO {
 };
 typedef struct FOODINFO FOODINFO;
 
+struct TreeStats {
+  int nodes;
+  int height;
+  int rotations;
+  int comp;
+};
+typedef struct TreeStats TREESTATS;
+
 struct TNodoA {
   FOODINFO info;
   int FB;
@@ -26,10 +34,10 @@ typedef struct TNodoA pNodoA;
 class AVL {
 private:
   TNodoA *root;
-  int rotações;
+  TREESTATS AVLStats;
 
   pNodoA *rotacao_direita(pNodoA *p) {
-    rotações++;
+    AVLStats.rotations++;
     pNodoA *u;
     u = p->esq;
     p->esq = u->dir;
@@ -39,7 +47,7 @@ private:
     return p;
   }
   pNodoA *rotacao_esquerda(pNodoA *p) {
-    rotações++;
+    AVLStats.rotations++;
     pNodoA *z;
     z = p->dir;
     p->dir = z->esq;
@@ -49,7 +57,7 @@ private:
     return p;
   }
   pNodoA *rotacao_dupla_direita(pNodoA *p) {
-    rotações++;
+    AVLStats.rotations++;
     pNodoA *u, *v;
     u = p->esq;
     v = u->dir;
@@ -69,7 +77,7 @@ private:
     return p;
   }
   pNodoA *rotacao_dupla_esquerda(pNodoA *p) {
-    rotações++;
+    AVLStats.rotations++;
     pNodoA *z, *y;
     z = p->dir;
     y = z->esq;
@@ -121,7 +129,8 @@ private:
 public:
   AVL() { 
     root = nullptr;
-    rotações = 0; }
+    AVLStats.rotations = 0;
+    AVLStats.nodes = 0; }
 
   int GetCalories(char food[30]){
     return _GetCalories(root, food);
@@ -130,11 +139,13 @@ public:
   int Inserir(FOODINFO x) {
     int ok = 0;
     root = Inserir(root, x, &ok);
+    AVLStats.nodes++;
     return ok;
   }
   void imprimir() {
-     _imprimir(root, 1);
-     printf("\n\nRotações %d", rotações); }
+     //_imprimir(root, 1);
+     printf("\nNodos %d", AVLStats.nodes);
+     printf("\nRotações %d", AVLStats.rotations); }
 
 private:
   void _imprimir(pNodoA *nodo, int nivel) {
@@ -263,7 +274,7 @@ int main(int argc, char *argv[]) {
     }
   }
   fclose(SourceFIle);
-  //avl.imprimir();
+  avl.imprimir();
 
 
 
@@ -281,6 +292,19 @@ int main(int argc, char *argv[]) {
 
   int totalCalories = 0;
 
+//opening the output file 
+
+ FILE *OutputFile;
+  OutputFile = fopen(argv[3], "w");
+
+  if (OutputFile == NULL) {
+    printf("Failed to create file.\n");
+    return 1;
+  }
+  //fprintf(OutputFile, "%s", "test");
+  fprintf(OutputFile, "Calorias calculadas para %s usando a tabela %s.\n", argv[2], argv[1]);
+
+
 
   while (fgets(line, sizeof(line), IngestionFile) != NULL) {
     struct FOODINFO food;
@@ -291,36 +315,20 @@ int main(int argc, char *argv[]) {
       strcpy(food.name, token);
       token = strtok(NULL, ";");
       if (token != NULL) {
-        CaloriesIn = (avl.GetCalories(food.name)) * std::stoi(token);
+        food.caloriesPer100g = avl.GetCalories(food.name);
+        CaloriesIn = (food.caloriesPer100g) * std::stoi(token);
         CaloriesIn /= 100;
         totalCalories += CaloriesIn;
       }
-      printf("\nConsumiu %s em uma porcao de %d gramas totalizando %d calorias", food.name,std::stoi(token), CaloriesIn);
+      fprintf(OutputFile ,"\n%dg de %s (%d calorias por 100g) = %d calorias", std::stoi(token), food.name, food.caloriesPer100g, CaloriesIn);
       //printf("Food: %s and calories: %d per 100 grams\n",food.name,food.caloriesPer100g);
     }
   }
   fclose(IngestionFile);
+  
+  fprintf(OutputFile, "\n\nTotal de %d calorias consumidas no dia.", totalCalories);
 
-
-  printf("\n total calories %d", totalCalories);
-
-
-
-
-
-
-
-
-  FILE *OutputFile;
-  OutputFile = fopen(argv[2], "w");
-
-  if (OutputFile == NULL) {
-    printf("Failed to create file.\n");
-    return 1;
-  }
- // fprintf(OutputFile, "%s", "test");
-
-  fclose(OutputFile);
+    fclose(OutputFile);
 
   
 
