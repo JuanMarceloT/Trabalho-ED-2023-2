@@ -111,7 +111,6 @@ private:
     return a;
   }
   int _GetCalories(pNodoA *a, char food[30]){
-    printf("tigas %s\n", a->info.name);
     if(strcmp(a->info.name, food) == 0)
       return a->info.caloriesPer100g;
     else if(strcmp(a->info.name, food) < 0)
@@ -265,9 +264,53 @@ int main(int argc, char *argv[]) {
   }
   fclose(SourceFIle);
   //avl.imprimir();
-  char foodtest[30];
-  strcpy(foodtest, "Spice Cake");
-  printf("calories from %s is %d", foodtest, avl.GetCalories(foodtest));
+
+
+
+
+
+
+  FILE *IngestionFile;
+
+  IngestionFile = fopen(argv[2], "r");
+
+  if (IngestionFile == NULL) {
+    printf("File opening failed.\n");
+    return 1;
+  }
+
+  int totalCalories = 0;
+
+
+  while (fgets(line, sizeof(line), IngestionFile) != NULL) {
+    struct FOODINFO food;
+    int CaloriesIn = 0;
+
+    char *token = strtok(line, ";");
+    if (token != NULL) {
+      strcpy(food.name, token);
+      token = strtok(NULL, ";");
+      if (token != NULL) {
+        CaloriesIn = (avl.GetCalories(food.name)) * std::stoi(token);
+        CaloriesIn /= 100;
+        totalCalories += CaloriesIn;
+      }
+      printf("\nConsumiu %s em uma porcao de %d gramas totalizando %d calorias", food.name,std::stoi(token), CaloriesIn);
+      //printf("Food: %s and calories: %d per 100 grams\n",food.name,food.caloriesPer100g);
+    }
+  }
+  fclose(IngestionFile);
+
+
+  printf("\n total calories %d", totalCalories);
+
+
+
+
+
+
+
+
   FILE *OutputFile;
   OutputFile = fopen(argv[2], "w");
 
@@ -275,7 +318,7 @@ int main(int argc, char *argv[]) {
     printf("Failed to create file.\n");
     return 1;
   }
-  fprintf(OutputFile, "%s", "test");
+ // fprintf(OutputFile, "%s", "test");
 
   fclose(OutputFile);
 
