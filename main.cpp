@@ -22,13 +22,14 @@ typedef struct TNodoA pNodoA;
 // avl e e abp
 
 // avl
-// avl
 // Utilizei codigos disponiveis no moodle
 class AVL {
 private:
   TNodoA *root;
+  int rotações;
 
   pNodoA *rotacao_direita(pNodoA *p) {
+    rotações++;
     pNodoA *u;
     u = p->esq;
     p->esq = u->dir;
@@ -38,6 +39,7 @@ private:
     return p;
   }
   pNodoA *rotacao_esquerda(pNodoA *p) {
+    rotações++;
     pNodoA *z;
     z = p->dir;
     p->dir = z->esq;
@@ -47,6 +49,7 @@ private:
     return p;
   }
   pNodoA *rotacao_dupla_direita(pNodoA *p) {
+    rotações++;
     pNodoA *u, *v;
     u = p->esq;
     v = u->dir;
@@ -66,6 +69,7 @@ private:
     return p;
   }
   pNodoA *rotacao_dupla_esquerda(pNodoA *p) {
+    rotações++;
     pNodoA *z, *y;
     z = p->dir;
     y = z->esq;
@@ -106,16 +110,32 @@ private:
     *ok = 0;
     return a;
   }
-
+  int _GetCalories(pNodoA *a, char food[30]){
+    printf("tigas %s\n", a->info.name);
+    if(strcmp(a->info.name, food) == 0)
+      return a->info.caloriesPer100g;
+    else if(strcmp(a->info.name, food) < 0)
+      return _GetCalories(a->dir, food);
+    else
+      return _GetCalories(a->esq, food);
+  }
 public:
-  AVL() { root = nullptr; }
+  AVL() { 
+    root = nullptr;
+    rotações = 0; }
+
+  int GetCalories(char food[30]){
+    return _GetCalories(root, food);
+  }
 
   int Inserir(FOODINFO x) {
     int ok = 0;
     root = Inserir(root, x, &ok);
     return ok;
   }
-  void imprimir() { _imprimir(root, 1); }
+  void imprimir() {
+     _imprimir(root, 1);
+     printf("\n\nRotações %d", rotações); }
 
 private:
   void _imprimir(pNodoA *nodo, int nivel) {
@@ -226,6 +246,9 @@ int main(int argc, char *argv[]) {
     return 1;
   }
 
+  AVL avl;
+
+
   while (fgets(line, sizeof(line), SourceFIle) != NULL) {
     struct FOODINFO food;
 
@@ -236,11 +259,15 @@ int main(int argc, char *argv[]) {
       if (token != NULL) {
         food.caloriesPer100g = std::stoi(token);
       }
-      printf("Food: %s and calories: %d per 100 grams\n",food.name,food.caloriesPer100g);
+      avl.Inserir(food);
+      //printf("Food: %s and calories: %d per 100 grams\n",food.name,food.caloriesPer100g);
     }
   }
   fclose(SourceFIle);
-
+  //avl.imprimir();
+  char foodtest[30];
+  strcpy(foodtest, "Spice Cake");
+  printf("calories from %s is %d", foodtest, avl.GetCalories(foodtest));
   FILE *OutputFile;
   OutputFile = fopen(argv[2], "w");
 
