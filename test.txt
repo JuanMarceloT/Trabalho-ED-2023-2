@@ -6,7 +6,6 @@ Calorias calculadas para day1.csv usando a tabela 1000Shuffled.csv.
 200g de Coffee (1 calorias por 100g) = 2 calorias
 200g de Beef Fillet (189 calorias por 100g) = 378 calorias
 150g de Rigatoni (353 calorias por 100g) = 529 calorias
-100g de Papaya Juice (58 calorias por 100g) = 58 calorias
 100g de Banoffee Pie (395 calorias por 100g) = 395 calorias
 50g de Arugula (25 calorias por 100g) = 12 calorias
 5g de Caesar Dressing (429 calorias por 100g) = 21 calorias
@@ -14,4 +13,4 @@ Calorias calculadas para day1.csv usando a tabela 1000Shuffled.csv.
 50g de Chocolate (529 calorias por 100g) = 264 calorias
 200g de White Wine (82 calorias por 100g) = 164 calorias
 
-Total de 2390 calorias consumidas no dia.
+Total de 2332 calorias consumidas no dia.

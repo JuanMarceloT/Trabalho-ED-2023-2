@@ -6,7 +6,7 @@
 class ABP {
 private:
     pNodoA* root;
-    TREESTATS AVLStats;
+    int _GetCalories(pNodoA *a, char food[30]);
 public:
     ABP();
     void insert(FOODINFO value);
