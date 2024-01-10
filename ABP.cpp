@@ -58,6 +58,26 @@ int _Height(pNodoA *a){
     }
 }
 
+bool isBSTUtil(pNodoA* node, const char* minValue, const char* maxValue) {
+    if (node == NULL) {
+        return true;
+    }
+
+    if (strcmp(node->info.name, minValue) < 0 || strcmp(node->info.name, maxValue) > 0) {
+        return false;
+    }
+
+    return (isBSTUtil(node->esq, minValue, node->info.name) &&
+            isBSTUtil(node->dir, node->info.name, maxValue));
+}
+
+bool isBST(pNodoA* root) {
+    const char* min = ""; // Valor mínimo possível para a string
+    const char* max = "ZZZZZZZZZZZZZZZZZZZZZZZZZZZZ"; // Valor máximo possível para a string
+
+    return isBSTUtil(root, min, max);
+}
+
 
 ABP::ABP() { 
   root = nullptr; 
@@ -72,6 +92,9 @@ void ABP::insert(FOODINFO x) {
 void ABP::print() { ImprimeArvore(root); }
 int ABP::GetCalories(char food[30]) { return _GetCalories(root, food); }
 TREESTATS ABP::GetStats() {
+      if(!isBST(root)){
+        printf("Test FAILED\n");
+      }
       ABPStats.height = _Height(root);
       return ABPStats;
 }

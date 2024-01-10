@@ -13,6 +13,8 @@
   TNodoA *root;
   TREESTATS AVLStats;
 
+
+
   pNodoA *rotacao_direita(pNodoA *p) {
     AVLStats.rotations++;
     pNodoA *u;
@@ -118,7 +120,10 @@
     printf("\n");
     _imprimir(nodo->esq, (nivel + 1));
     _imprimir(nodo->dir, (nivel + 1));
+  
   }
+
+
   pNodoA *Inserir(pNodoA *a, FOODINFO x, int *ok) {
     /* Insere nodo em uma árvore AVL, onde A representa a raiz da árvore,
     x, a chave a ser inserida e h a altura da árvore */
@@ -178,6 +183,21 @@
     }
   }
 
+   
+  bool isAVL(pNodoA *root) {
+    if (root == NULL) {
+        return true;
+    }
+
+    int heightDiff = abs(_Altura(root->esq) - _Altura(root->dir));
+    if (heightDiff > 1) {
+        return false;
+    }
+
+    return isAVL(root->esq) && isAVL(root->dir);
+}
+
+
   AVL::AVL() { 
     root = nullptr;
     AVLStats.rotations = 0;
@@ -199,7 +219,10 @@
     }
 
     TREESTATS AVL::GetStats(){
-      AVLStats.height = _Altura(root);
+        AVLStats.height = _Altura(root);
+        if(!isAVL(root)){
+          printf("Test FAILED\n");
+        }
         return AVLStats;
     }
 
