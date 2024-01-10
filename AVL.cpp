@@ -96,6 +96,8 @@
     return a;
   }
   int _GetCalories(pNodoA *a, char food[30]){
+    AVLStats.comp++;
+
     if(strcmp(a->info.name, food) == 0)
       return a->info.caloriesPer100g;
     else if(strcmp(a->info.name, food) < 0)
@@ -162,6 +164,19 @@
     }
     return a;
   }
+  int _Altura(pNodoA *a) {
+    int Alt_Esq, Alt_Dir;
+    if (a == NULL)
+      return 0;
+    else {
+      Alt_Esq = _Altura(a->esq);
+      Alt_Dir = _Altura(a->dir);
+      if (Alt_Esq > Alt_Dir)
+        return (1 + Alt_Esq);
+      else
+        return (1 + Alt_Dir);
+    }
+  }
 
   AVL::AVL() { 
     root = nullptr;
@@ -184,6 +199,7 @@
     }
 
     TREESTATS AVL::GetStats(){
+      AVLStats.height = _Altura(root);
         return AVLStats;
     }
 

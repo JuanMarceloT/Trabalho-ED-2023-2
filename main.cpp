@@ -51,7 +51,6 @@ int main(int argc, char *argv[]) {
   fclose(SourceFIle);
   //avl.print();
   
-  ShowStasts(avl.GetStats());
 
 
 
@@ -106,7 +105,8 @@ int main(int argc, char *argv[]) {
 
     fclose(OutputFile);
 
-  
+    ShowStasts(avl.GetStats());
+
 
   return 0;
 }
