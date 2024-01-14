@@ -16,6 +16,17 @@ void ShowStasts(TREESTATS s) {
   printf("\n");
 }
 
+void FPrintStasts(TREESTATS s, FILE *file) {
+  fprintf(file, "\n================== ESTATISTICAS %s ==================", s.tree);
+  fprintf(file, "\nNumero de nodos: %d", s.nodes);
+  fprintf(file, "\nAltura: %d", s.height);
+  fprintf(file, "\nRotações: %d", s.rotations);
+  fprintf(file, "\nComparações: %d", s.comp);
+  fprintf(file, "\n");
+}
+
+
+
 int main(int argc, char *argv[]) {
 
   if (argc != 4) {
@@ -107,6 +118,10 @@ int main(int argc, char *argv[]) {
 
   fprintf(OutputFile, "\n\nTotal de %d calorias consumidas no dia.",
           totalCalories);
+
+  FPrintStasts(abp.GetStats(), OutputFile);
+  FPrintStasts(avl.GetStats(), OutputFile);
+
 
   fclose(OutputFile);
 

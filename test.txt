@@ -14,3 +14,14 @@ Calorias calculadas para day1.csv usando a tabela 1000Shuffled.csv.
 200g de White Wine (82 calorias por 100g) = 164 calorias
 
 Total de 2332 calorias consumidas no dia.
+================== ESTATISTICAS ABP ==================
+Numero de nodos: 1000
+Altura: 21
+Rotações: 0
+Comparações: 145
+
+================== ESTATISTICAS AVL ==================
+Numero de nodos: 1000
+Altura: 12
+Rotações: 445
+Comparações: 345
