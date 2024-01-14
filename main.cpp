@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <string>
+#include <cctype>
 
 #include "ABP.h"
 #include "AVL.h"
@@ -25,7 +26,15 @@ void FPrintStasts(TREESTATS s, FILE *file) {
   fprintf(file, "\n");
 }
 
+void toLowerCase(char* str) {
+    if (str == nullptr) {
+        return;  // Handle null pointer
+    }
 
+    for (; *str != '\0'; ++str) {
+        *str = std::tolower(static_cast<unsigned char>(*str));
+    }
+}
 
 int main(int argc, char *argv[]) {
 
@@ -51,6 +60,7 @@ int main(int argc, char *argv[]) {
 
     char *token = strtok(line, ";");
     if (token != NULL) {
+      toLowerCase(token);
       strcpy(food.name, token);
       token = strtok(NULL, ";");
       if (token != NULL) {
@@ -95,6 +105,7 @@ int main(int argc, char *argv[]) {
 
     char *token = strtok(line, ";");
     if (token != NULL) {
+      toLowerCase(token);
       strcpy(food.name, token);
       token = strtok(NULL, ";");
       if (token != NULL) {
