@@ -16,9 +16,9 @@ Calorias calculadas para day1.csv usando a tabela 1000Shuffled.csv.
 Total de 2332 calorias consumidas no dia.
 ================== ESTATISTICAS ABP ==================
 Numero de nodos: 1000
-Altura: 21
+Altura: 22
 Rotações: 0
-Comparações: 144
+Comparações: 276
 
 ================== ESTATISTICAS AVL ==================
 Numero de nodos: 1000

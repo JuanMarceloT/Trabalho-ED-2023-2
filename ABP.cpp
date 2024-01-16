@@ -10,6 +10,12 @@
 // Utilizei codigos disponiveis no moodle
     TREESTATS ABPStats;
 
+
+int comp(const char *a,const char *b){
+  ABPStats.comp++;
+  return(strcmp(a,b));
+}
+
 pNodoA *InsereArvore(pNodoA *a, FOODINFO ch) {
   if (a == NULL) {
     a = (pNodoA *)malloc(sizeof(pNodoA));
@@ -32,10 +38,9 @@ void ImprimeArvore(pNodoA *a) {
 
 int ABP::_GetCalories(pNodoA *a, char food[30]) {
   while (a != NULL) {
-    ABPStats.comp++;
-    if (strcmp(a->info.name, food) == 0)
+    if (comp(a->info.name, food) == 0)
       return a->info.caloriesPer100g; // achou retorna o ponteiro para o nodo
-    else if (strcmp(a->info.name, food) > 0)
+    else if (comp(a->info.name, food) > 0)
       a = a->esq;
     else
       a = a->dir;
@@ -45,7 +50,7 @@ int ABP::_GetCalories(pNodoA *a, char food[30]) {
 
 int _Height(pNodoA *a){
     if (a == NULL) {
-        return -1; // Árvore vazia tem altura -1
+        return 0; // Árvore vazia tem altura -1
     } else {
         int leftHeight = _Height(a->esq);
         int rightHeight = _Height(a->dir);
