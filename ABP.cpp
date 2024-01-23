@@ -77,8 +77,8 @@ bool isBSTUtil(pNodoA* node, const char* minValue, const char* maxValue) {
 }
 
 bool isBST(pNodoA* root) {
-    const char* min = ""; // Valor mínimo possível para a string
-    const char* max = "zzzzzzzzzzzzzzzzzzzzzzzzz"; // Valor máximo possível para a string
+    const char* min = ""; // Valor min para a string
+    const char* max = "zzzzzzzzzzzzzzzzzzzzzzzzz"; // Valor max para a string
 
     return isBSTUtil(root, min, max);
 }

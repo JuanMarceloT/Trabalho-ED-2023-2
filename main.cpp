@@ -109,14 +109,11 @@ int main(int argc, char *argv[]) {
       strcpy(food.name, token);
       token = strtok(NULL, ";");
       if (token != NULL) {
-        if (avl.GetCalories(food.name) == abp.GetCalories(food.name)) {
-          printf("%s passou, ambos deram %d cal\n",food.name, avl.GetCalories(food.name));
+          abp.GetCalories(food.name);
           food.caloriesPer100g = avl.GetCalories(food.name);
           CaloriesIn = (food.caloriesPer100g) * std::stoi(token);
           CaloriesIn /= 100;
           totalCalories += CaloriesIn;
-        }else{
-          printf("\nErro");
         }
       }
       fprintf(OutputFile, "\n%dg de %s (%d calorias por 100g) = %d calorias",
@@ -124,10 +121,10 @@ int main(int argc, char *argv[]) {
       // printf("Food: %s and calories: %d per 100
       // grams\n",food.name,food.caloriesPer100g);
     }
-  }
+  
   fclose(IngestionFile);
 
-  fprintf(OutputFile, "\n\nTotal de %d calorias consumidas no dia.",
+  fprintf(OutputFile, "\n\nTotal de %d calorias consumidas no dia.\n",
           totalCalories);
 
   FPrintStasts(abp.GetStats(), OutputFile);

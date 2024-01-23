@@ -97,15 +97,22 @@
     *ok = 0;
     return a;
   }
-  int _GetCalories(pNodoA *a, char food[30]){
-    AVLStats.comp++;
 
-    if(strcmp(a->info.name, food) == 0)
-      return a->info.caloriesPer100g;
-    else if(strcmp(a->info.name, food) < 0)
-      return _GetCalories(a->dir, food);
+
+  int compAVL(const char *a, const char *b){
+    AVLStats.comp++;
+    return strcmp(a,b);
+  }
+  int _GetCalories(pNodoA *a, char food[30]){
+    while (a != NULL) {
+    if (compAVL(a->info.name, food) == 0)
+      return a->info.caloriesPer100g; // achou retorna o ponteiro para o nodo
+    else if (compAVL(a->info.name, food) > 0)
+      a = a->esq;
     else
-      return _GetCalories(a->esq, food);
+      a = a->dir;
+  }
+  return -1; // não achou, retorna null
   }
 
   void _imprimir(pNodoA *nodo, int nivel) {
@@ -127,6 +134,7 @@
   pNodoA *Inserir(pNodoA *a, FOODINFO x, int *ok) {
     /* Insere nodo em uma árvore AVL, onde A representa a raiz da árvore,
     x, a chave a ser inserida e h a altura da árvore */
+    
     if (a == NULL) {
       a = (pNodoA *)malloc(sizeof(pNodoA));
       a->info = x;
