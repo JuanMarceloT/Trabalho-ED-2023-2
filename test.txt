@@ -1,4 +1,4 @@
-Calorias calculadas para day1.csv usando a tabela 1000Sorted.csv.
+Calorias calculadas para day1.csv usando a tabela 1000Shuffled.csv.
 
 150g de activia (74 calorias por 100g) = 111 calorias
 110g de tangerine (53 calorias por 100g) = 58 calorias
@@ -17,12 +17,12 @@ Total de 2332 calorias consumidas no dia.
 
 ================== ESTATISTICAS ABP ==================
 Numero de nodos: 1000
-Altura: 867
+Altura: 22
 Rotações: 0
-Comparações: 6426
+Comparações: 144
 
 ================== ESTATISTICAS AVL ==================
 Numero de nodos: 1000
-Altura: 10
-Rotações: 986
-Comparações: 206
+Altura: 12
+Rotações: 449
+Comparações: 114

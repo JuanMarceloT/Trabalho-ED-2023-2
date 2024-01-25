@@ -8,6 +8,8 @@
 #include "ABP.h"
 #include "AVL.h"
 
+
+
 void ShowStasts(TREESTATS s) {
   printf("\n================== ESTATISTICAS %s ==================", s.tree);
   printf("\nNumero de nodos: %d", s.nodes);
@@ -100,24 +102,23 @@ int main(int argc, char *argv[]) {
           argv[2], argv[1]);
 
   while (fgets(line, sizeof(line), IngestionFile) != NULL) {
-    struct FOODINFO food;
+    pNodoA *food;
     int CaloriesIn = 0;
 
     char *token = strtok(line, ";");
     if (token != NULL) {
       toLowerCase(token);
-      strcpy(food.name, token);
-      token = strtok(NULL, ";");
       if (token != NULL) {
-          abp.GetCalories(food.name);
-          food.caloriesPer100g = avl.GetCalories(food.name);
-          CaloriesIn = (food.caloriesPer100g) * std::stoi(token);
+          abp.find(token);
+          food = avl.find(token);
+          token = strtok(NULL, ";");
+          CaloriesIn = (food->info.caloriesPer100g) * std::stoi(token);
           CaloriesIn /= 100;
           totalCalories += CaloriesIn;
         }
       }
       fprintf(OutputFile, "\n%dg de %s (%d calorias por 100g) = %d calorias",
-              std::stoi(token), food.name, food.caloriesPer100g, CaloriesIn);
+              std::stoi(token), food->info.name, food->info.caloriesPer100g, CaloriesIn);
       // printf("Food: %s and calories: %d per 100
       // grams\n",food.name,food.caloriesPer100g);
     }
@@ -133,8 +134,10 @@ int main(int argc, char *argv[]) {
 
   fclose(OutputFile);
 
-  ShowStasts(abp.GetStats());
-  ShowStasts(avl.GetStats());
+  //ShowStasts(abp.GetStats());
+  //ShowStasts(avl.GetStats());
+  avl.print();
+
 
   return 0;
 }

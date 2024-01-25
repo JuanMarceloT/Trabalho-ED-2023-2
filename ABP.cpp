@@ -36,18 +36,6 @@ void ImprimeArvore(pNodoA *a) {
   }
 }
 
-int ABP::_GetCalories(pNodoA *a, char food[30]) {
-  while (a != NULL) {
-    if (comp(a->info.name, food) == 0)
-      return a->info.caloriesPer100g; // achou retorna o ponteiro para o nodo
-    else if (comp(a->info.name, food) > 0)
-      a = a->esq;
-    else
-      a = a->dir;
-  }
-  return -1; // não achou, retorna null
-}
-
 int _Height(pNodoA *a){
     if (a == NULL) {
         return 0; // Árvore vazia tem altura -1
@@ -62,6 +50,27 @@ int _Height(pNodoA *a){
         }
     }
 }
+
+pNodoA *ABP::_find(pNodoA *a, char *chave)
+{
+  while (a != NULL)
+  {
+    ABPStats.comp++;
+    if (!strcmp(a->info.name, chave))
+    {
+      return a;
+    }
+    else
+    {
+      if (strcmp(a->info.name, chave) > 0)
+        a = a->esq;
+      else
+        a = a->dir;
+    }
+  }
+  return NULL;
+}
+
 
 bool isBSTUtil(pNodoA* node, const char* minValue, const char* maxValue) {
     if (node == NULL) {
@@ -95,7 +104,7 @@ void ABP::insert(FOODINFO x) {
     ABPStats.nodes++;
 }
 void ABP::print() { ImprimeArvore(root); }
-int ABP::GetCalories(char food[30]) { return _GetCalories(root, food); }
+pNodoA *ABP::find(char food[30]) { return ABP::_find(root, food); }
 TREESTATS ABP::GetStats() {
       if(!isBST(root)){
         printf("Test FAILEDs\n");
