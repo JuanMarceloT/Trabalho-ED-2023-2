@@ -10,7 +10,7 @@
 // avl
 // Utilizei codigos disponiveis no moodle
 
-TNodoA *root;
+
 TREESTATS AVLStats;
 
 pNodoA *rotacao_direita(pNodoA *p)

@@ -70,8 +70,6 @@ int main(int argc, char *argv[]) {
       }
       avl.insert(food);
       abp.insert(food);
-      // printf("Food: %s and calories: %d per 100
-      // grams\n",food.name,food.caloriesPer100g);
     }
   }
 fclose(SourceFIle);
@@ -101,9 +99,6 @@ fclose(SourceFIle);
       }else{
         error = true;
       }
-      
-      // printf("Food: %s and calories: %d per 100
-      // grams\n",food.name,food.caloriesPer100g);
     }
   }
 fclose(SourceFIle);

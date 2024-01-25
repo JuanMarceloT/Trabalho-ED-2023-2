@@ -11,11 +11,6 @@
     TREESTATS ABPStats;
 
 
-int comp(const char *a,const char *b){
-  ABPStats.comp++;
-  return(strcmp(a,b));
-}
-
 pNodoA *InsereArvore(pNodoA *a, FOODINFO ch) {
   if (a == NULL) {
     a = (pNodoA *)malloc(sizeof(pNodoA));
@@ -38,7 +33,7 @@ void ImprimeArvore(pNodoA *a) {
 
 int _Height(pNodoA *a){
     if (a == NULL) {
-        return 0; // Árvore vazia tem altura -1
+        return 0; 
     } else {
         int leftHeight = _Height(a->esq);
         int rightHeight = _Height(a->dir);
